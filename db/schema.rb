@@ -11,9 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140115083138) do
+ActiveRecord::Schema.define(version: 20140117023649) do
 
   create_table "users", force: true do |t|
+    t.string   "remember_token"
     t.string   "name"
     t.string   "email"
     t.datetime "created_at"
