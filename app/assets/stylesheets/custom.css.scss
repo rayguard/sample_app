@@ -10,6 +10,15 @@ $grayMediumLight: #eaeaea;
   box-sizing: border-box;
 }
 
+#micropost-counter {
+  text-align: right;
+  background-color: transparent;
+  box-shadow: none;
+  border: none;
+  cursor: default;
+  margin-top: -10px;
+}
+
 /* microposts */
 
 .microposts {
@@ -180,7 +189,7 @@ p {
   float: left;
   margin-right: 10px;
   font-size: 1.7em;
-  color: yellow;
+  color: lightblue;
   text-transform: uppercase;
   letter-spacing: -1px;
   padding-top: 9px;
