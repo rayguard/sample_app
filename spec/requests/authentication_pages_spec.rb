@@ -15,7 +15,7 @@ describe "Authentication" do
     it { should_not have_link('Settings') }
     it { should_not have_link('Sign out', href: signout_path) }
     it { should have_link('Sign in', href: signin_path) }
-  end
+  end#close signin page
 
   describe "signin" do
 
@@ -30,8 +30,8 @@ describe "Authentication" do
       describe "after visiting another page" do
         before { click_link "Home" }
         it { should_not have_selector('div.alert.alert-error') }
-      end
-    end
+      end#close after visitting another page
+    end#close with invalid information
   
     describe "with valid information" do
       let(:user) { FactoryGirl.create(:user) }
@@ -43,8 +43,8 @@ describe "Authentication" do
       it { should have_link('Settings',    href: edit_user_path(user)) }
       it { should have_link('Sign out',    href: signout_path) }
       it { should_not have_link('Sign in', href: signin_path) }
-    end
-  end
+    end#close with valid information
+  end#close signin
 
   describe "authorization" do
 
@@ -55,26 +55,26 @@ describe "Authentication" do
         describe "submitting to the create action" do
           before { post relationships_path }
           specify { expect(response).to redirect_to(signin_path) }
-        end
+        end#close submitting to the create action
 
         describe "submitting to the destroy action" do
           before { delete relationship_path(1) }
           specify { expect(response).to redirect_to(signin_path) }
-        end
-      end
+        end#close submitting to the destroy action
+      end#close in the Relationships controller
 
       describe "in the Microposts controller" do
 
         describe "submitting to the create action" do
           before { post microposts_path }
           specify { expect(response).to redirect_to(signin_path) }
-        end
+        end#close submitting to the create action
 
         describe "submitting to the destroy action" do
           before { delete micropost_path(FactoryGirl.create(:micropost)) }
           specify { expect(response).to redirect_to(signin_path) }
-        end
-      end
+        end#close submitting to the destroy action
+      end#close in the Microposts controller
 
       describe "when attempting to visit a protected page" do
         before do
@@ -82,13 +82,13 @@ describe "Authentication" do
           fill_in "Email",    with: user.email
           fill_in "Password", with: user.password
           click_button "Sign in"
-        end
+        end#close before do
 
         describe "after signing in" do
 
           it "should render the desired protected page" do
             expect(page).to have_title('Edit user')
-          end
+          end#close after signing in
 
           describe "when signing in again" do
             before do
@@ -97,26 +97,26 @@ describe "Authentication" do
               fill_in "Email",    with: user.email
               fill_in "Password", with: user.password
               click_button "Sign in"
-            end
+            end#close before do
 
             it "should render the default (profile) page" do
               expect(page).to have_title(user.name)
-            end
-          end
-        end
-      end
+            end#close when signing in again
+          end#close when signing in again
+        end#close after signing in
+      end#close when attempting to visit a protected page
 
       describe "in the Users controller" do
 
         describe "visiting the following page" do
           before { visit following_user_path(user) }
           it { should have_title('Sign in') }
-        end
+        end#close visiting the following page
 
         describe "visiting the followers page" do
           before { visit followers_user_path(user) }
           it { should have_title('Sign in') }
-        end
+        end#close visiting the followers page
 
         describe "visiting the edit page" do
           before { visit edit_user_path(user) }
@@ -125,15 +125,15 @@ describe "Authentication" do
         describe "visiting the user index" do
           before { visit users_path }
           it { should have_title('Sign in') }
-        end
-      end 
+        end#close visiting the user index
+      end#close visiting the edit page
 
         describe "submitting to the update action" do
           before { patch user_path(user) }
           specify { expect(response).to redirect_to(signin_path) }
-        end
-      end
-    end
+        end#close submitting to the update action
+      end#close in the Users controller
+    end#close or non-signed-in users
 
     describe "as wrong user" do
       let(:user) { FactoryGirl.create(:user) }
@@ -144,13 +144,13 @@ describe "Authentication" do
         before { get edit_user_path(wrong_user) }
         specify { expect(response.body).not_to match(full_title('Edit user')) }
         specify { expect(response).to redirect_to(root_url) }
-      end
+      end#close submitting a GET request to the Users#edit action
 
       describe "submitting a PATCH request to the Users#update action" do
         before { patch user_path(wrong_user) }
         specify { expect(response).to redirect_to(root_url) }
-      end
-    end
+      end#close submitting a PATCH request to the Users#update action
+    end#close as wrong user
     
     describe "as non-admin user" do
       let(:user) { FactoryGirl.create(:user) }
@@ -161,8 +161,8 @@ describe "Authentication" do
       describe "submitting a DELETE request to the Users#destroy action" do
         before { delete user_path(user) }
         specify { expect(response).to redirect_to(root_url) }
-      end
-    end
+      end#close submitting a DELETE request to the Users#destroy action
+    end#close as non-admin user
 
     describe "for signed in users" do
       let(:user) { FactoryGirl.create(:user) }
@@ -171,12 +171,12 @@ describe "Authentication" do
       describe "using a 'new' action" do
         before { get new_user_path }
         specify { response.should redirect_to(root_path) }
-      end
+      end#close using a 'new' action
 
       describe "using a 'create' action" do
         before { post users_path }
           specify { response.should redirect_to(root_path) }
-      end         
-    end
-  end
-end
+      end#close using a 'create' action         
+    end#close for signed in users
+  end#close authorization
+end#close authentication
